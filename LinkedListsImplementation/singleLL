@@ -1,0 +1,123 @@
+import java.util.Scanner;
+class Node{
+    int data;
+    Node next;
+}
+class LinkedLists{
+    Node head;
+    Node tail;
+    int total_nodes_count;
+
+    public Node createLL(int data){
+        head = new Node();
+        Node newnode = new Node();
+        newnode.data = data;
+        newnode.next = null;
+        head = newnode;
+        tail = newnode;
+        total_nodes_count++;
+        return head;
+    }
+    public void insertNodeAtBegining(int data){
+        if(head == null){
+            createLL(data);
+        }
+        else{
+            Node newnode = new Node();
+            newnode.data = data;
+            newnode.next = head;
+            head = newnode;
+            total_nodes_count++;
+            
+        }
+    }
+    public void insertNodeAtEnd(int data){
+        if(head==null){
+            createLL(data);
+        }
+        else{
+            Node newnode = new Node();
+            newnode.data = data;
+            newnode.next = null;
+            tail.next = newnode;
+            tail = newnode;
+            total_nodes_count++;
+        }
+    }
+    public void insertAtLocation(int loc,int data){
+        if(loc == 0){
+            insertNodeAtBegining(data);
+        }
+        else if(loc >= total_nodes_count ){
+            insertNodeAtEnd(data);
+        }
+        else{
+            Node n = head;
+            for(int i=0;i<loc-1;i++){
+                n = n.next;
+            }
+            Node newnode = new Node();
+            newnode.data = data;
+            newnode.next = n.next;
+            n.next = newnode;
+        }
+    }
+    public void deleteAtBegining(){
+        if(head == null){
+            System.out.println("Linked list empty");
+        }
+        else{
+            head = head.next;
+        }
+    }
+    public void deleteAtLocation(int loc){
+        if(loc==0){
+            deleteAtBegining();
+        }
+        else{
+            Node n = head;
+            for(int i=0;i<loc-1;i++){
+                n = n.next;
+            }
+            n.next = n.next.next;
+        }
+    }
+
+    public void traverse(){
+        Node n = head;
+        while(n != null){
+            System.out.print(n.data+" ");
+            n = n.next;
+        }
+    }
+    public void reverse(){
+        Node previousnode = null;
+        Node currentnode = head;
+        Node nextnode = head;
+        while (nextnode != null){
+            nextnode = currentnode.next;
+            currentnode.next = previousnode;
+            previousnode = currentnode;
+            currentnode = nextnode;
+        }
+        head = previousnode;
+    }
+    
+}
+
+class singleLL {
+    public static void main(String[] args) {
+        LinkedLists sl = new LinkedLists();
+        Scanner sc = new Scanner(System.in);
+        int size = sc.nextInt();
+        for(int i=0;i<size;i++){
+            int d = sc.nextInt();
+            sl.insertNodeAtEnd(d);
+        }
+        //System.out.println(sl.total_nodes_count);
+        //sl.traverse();
+        sl.reverse();
+        sl.traverse();
+
+    }
+}
